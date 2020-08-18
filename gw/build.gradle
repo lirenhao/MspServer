@@ -102,6 +102,37 @@ task("buildAdmin", type: Exec) {
     commandLine "npm", "run", "build"
 }
 
+tasks.register("copyApp") {
+    group("build")
+    description("拷贝app webapp")
+    doLast {
+        copy {
+            from '../app/dist'
+            into 'src/main/resources/static/msp'
+            exclude("index.html")
+        }
+    }
+    doLast {
+        copy {
+            from '../admin/dist/index.html'
+            into 'src/main/resources/templates'
+        }
+    }
+}
+
+tasks.register("deleteApp") {
+    group("build")
+    description("清理app webapp")
+    doLast {
+        delete "src/main/resources/static/msp"
+    }
+}
+
+task("buildApp", type: Exec) {
+    workingDir("../app")
+    commandLine "npm", "run", "build"
+}
+
 task("buildAll") {
     buildAdmin.mustRunAfter("deleteAdmin")
     copyAdmin.mustRunAfter("buildAdmin")
