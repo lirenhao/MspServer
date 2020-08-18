@@ -1,5 +1,6 @@
-#logging.level:
-#    org.springframework: TRACE
+logging.level:
+  org.springframework: DEBUG
+
 server:
   error:
     includeStacktrace: ALWAYS
@@ -7,34 +8,39 @@ server:
 yada.contextPath: /gw
 
 spring.cloud.gateway.routes:
-  - uri: http://localhost:3010
+  - uri: http://localhost:3012
     predicates:
-      - App=${yada.contextPath:}/app/app-1
-    filters:
-      - Auth
-  - uri: http://localhost:3011
-    predicates:
-      - Svc=${yada.contextPath:}/svc,service-1
+      - Svc=${yada.contextPath}/svc,msp
     filters:
       - ApiAuth
+      - RewritePath=${yada.contextPath}/svc(?<segment>/?.*),$\{segment}
+  - uri: http://localhost:3001
+    predicates:
+      - Svc=${yada.contextPath}/svc,user
+    filters:
+      - ApiAuth=noCheckPower
+      - RewritePath=${yada.contextPath}/svc(?<segment>/?.*),$\{segment}
   - uri: http://localhost:8080
     predicates:
-      - Path=${yada.contextPath:}/**
+      - Path=${yada.contextPath}/**
     filters:
-      - RewritePath=${yada.contextPath:}(?<segment>/?.*),$\{segment}
+      - RewritePath=${yada.contextPath}(?<segment>/?.*),$\{segment}
 
 management.endpoints:
   web.exposure.include: metrics,gateway
   health.show-details: always
 
-#yada.security:
-#  defaultPwd: changepwd
-#  recaptcha: recaptcha.None
-#  pwdStrength: 1
-#  token:
-#    secret: yadajwt
-#    expire: 3600
+yada.security:
+  defaultPwd: 111111
+  pwdStrength: 1
+  recaptcha:
+    type: None
+    secret: 6Leu2NsUAAAAAKbXdSjLz6_c1cf8qX2bL4xfn1mN
+    sitekey: 6Leu2NsUAAAAAFttLaiyEKDu9yLgrYJhN77Ou1ge
+    proxyHost:
+    proxyPort: 8080
+  token:
+    secret: yadajwt
+    expire: 3600
 
-#yada.db.mongo.uri: 'mongodb://localhost/yada_auth?replicaSet=rs'
-
-
+yada.db.mongo.uri: 'mongodb://localhost/msp_auth?replicaSet=rs'

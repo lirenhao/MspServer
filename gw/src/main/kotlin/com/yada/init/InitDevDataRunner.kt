@@ -21,31 +21,15 @@ private val orgJson = """
 [
   {
     "id": "00",
-    "name": "总机构"
+    "name": "总行"
   },
   {
     "id": "001",
-    "name": "机构一"
+    "name": "新加坡分行"
   },
   {
     "id": "001001",
-    "name": "机构一1"
-  },
-  {
-    "id": "002",
-    "name": "机构二"
-  },
-  {
-    "id": "003",
-    "name": "机构三"
-  },
-  {
-    "id": "004",
-    "name": "机构四"
-  },
-  {
-    "id": "005",
-    "name": "机构五"
+    "name": "新加坡皮草"
   }
 ]
 """.trimIndent()
@@ -53,12 +37,13 @@ private val orgJson = """
 private val userJson = """
 [
   {
-    "id": "user1",
-    "orgId": "00",
+    "id": "104767999000004@admin",
+    "orgId": "001",
     "roles": [
-      "role1"
+      "admin"
     ],
-    "email": "email"
+    "status": "00",
+    "email": "email@user.com"
   }
 ]
 """.trimIndent()
@@ -72,58 +57,91 @@ private val adminJson = """
 private val roleJson = """
 [
   {
-    "id": "role1",
+    "id": "admin",
     "svcs": [
-      {
-        "id": "service-1",
-        "resources": [
-          {
-            "uri": "/res1",
-            "ops": [
-              "READ",
-              "CREATE",
-              "UPDATE",
-              "DELETE"
+        {
+            "id": "msp",
+            "resources": [
+                {
+                    "uri": "/policy",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/sales/total",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/mer/termNos",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/sales/months",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/eState",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/mer",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/settle/trans",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/settle",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/mer/subs",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/settle/download",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/sales/tops",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/trans/download",
+                    "ops": [
+                        "READ"
+                    ]
+                },
+                {
+                    "uri": "/trans",
+                    "ops": [
+                        "READ"
+                    ]
+                }
             ]
-          },
-          {
-            "uri": "/terminal",
-            "ops": [
-                "READ"
-            ]
-          }
-        ]
-      },
-      {
-        "id": "service-2",
-        "resources": [
-          {
-            "uri": "/trans",
-            "ops": [
-              "READ"
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "role2",
-    "svcs": [
-      {
-        "id": "service-1",
-        "resources": [
-          {
-            "uri": "/merchant",
-            "ops": [
-              "READ",
-              "CREATE",
-              "UPDATE",
-              "DELETE"
-            ]
-          }
-        ]
-      }
+        }
     ]
   }
 ]
@@ -132,101 +150,86 @@ private val roleJson = """
 private val svcJson = """
 [
   {
-    "id": "service-1",
+    "id": "msp",
     "resources": [
-      {
-        "uri": "/res1",
-        "ops": [
-          "READ",
-          "CREATE",
-          "UPDATE",
-          "DELETE"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "READ",
-          "CREATE",
-          "UPDATE",
-          "DELETE"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "service-2",
-    "resources": [
-      {
-        "uri": "/merchant",
-        "ops": [
-          "READ"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "READ"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "service-3",
-    "resources": [
-      {
-        "uri": "/merchant",
-        "ops": [
-          "CREATE"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "CREATE"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "service-4",
-    "resources": [
-      {
-        "uri": "/merchant",
-        "ops": [
-          "UPDATE"
-        ]
-      },
-      {
-        "uri": "/terminal",
-        "ops": [
-          "UPDATE"
-        ]
-      },
-      {
-        "uri": "/trans",
-        "ops": [
-          "READ"
-        ]
-      }
+        {
+            "uri": "/policy",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/sales/total",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/mer/termNos",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/sales/months",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/eState",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/mer",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/settle/trans",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/settle",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/mer/subs",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/settle/download",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/sales/tops",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/trans/download",
+            "ops": [
+                "READ"
+            ]
+        },
+        {
+            "uri": "/trans",
+            "ops": [
+                "READ"
+            ]
+        }
     ]
   }
 ]
