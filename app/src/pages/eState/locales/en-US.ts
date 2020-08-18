@@ -1,0 +1,16 @@
+export default {
+  'eState.option.query': 'Query',
+  'eState.option.download': 'Download',
+  'eState.query.merNo.label': 'Merchant ID',
+  'eState.query.merNo.required': 'Merchant No is required',
+  'eState.query.merNo.placeholder': 'Please Select',
+  'eState.query.settleDate.label': 'Settlement Date',
+  'eState.query.settleDate.required': 'Settlement Date is required',
+  'eState.query.settleDate.placeholder': 'Please Select',
+  'eState.channel.title': 'Transaction Type',
+  'eState.settleDate.title': 'Settlement Date',
+  'eState.tranAmt.title': 'Settlement Amount',
+  'eState.fee.title': 'Merchant Discount Fee',
+  'eState.settleAmt.title': 'Net Settlement Amount',
+  'eState.tranDate.title': 'Transfer Date',
+};
