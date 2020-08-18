@@ -71,9 +71,9 @@ test {
     }
 }
 
-tasks.register("copyAdmin") {
+tasks.register("copyApp") {
     group("build")
-    description("拷贝admin webapp")
+    description("拷贝webapp")
     doLast {
         copy {
             from '../admin/dist'
@@ -87,24 +87,6 @@ tasks.register("copyAdmin") {
             into 'src/main/resources/templates/admin'
         }
     }
-}
-
-tasks.register("deleteAdmin") {
-    group("build")
-    description("清理admin webapp")
-    doLast {
-        delete "src/main/resources/static/admin"
-    }
-}
-
-task("buildAdmin", type: Exec) {
-    workingDir("../admin")
-    commandLine "npm", "run", "build"
-}
-
-tasks.register("copyApp") {
-    group("build")
-    description("拷贝app webapp")
     doLast {
         copy {
             from '../app/dist'
@@ -114,7 +96,7 @@ tasks.register("copyApp") {
     }
     doLast {
         copy {
-            from '../admin/dist/index.html'
+            from '../app/dist/index.html'
             into 'src/main/resources/templates'
         }
     }
@@ -122,20 +104,46 @@ tasks.register("copyApp") {
 
 tasks.register("deleteApp") {
     group("build")
-    description("清理app webapp")
+    description("清理webapp")
+    doLast {
+        delete "src/main/resources/static/admin"
+    }
     doLast {
         delete "src/main/resources/static/msp"
     }
 }
 
-task("buildApp", type: Exec) {
-    workingDir("../app")
+task("buildAdmin", type: Exec) {
+    workingDir("../admin")
+    commandLine "npm", "install"
     commandLine "npm", "run", "build"
 }
 
-task("buildAll") {
-    buildAdmin.mustRunAfter("deleteAdmin")
-    copyAdmin.mustRunAfter("buildAdmin")
+task("buildApp", type: Exec) {
+    workingDir("../app")
+    commandLine "npm", "install"
+    commandLine "npm", "run", "build:sg"
+}
+
+task("buildDevApp", type: Exec) {
+    workingDir("../app")
+    commandLine "npm", "install"
+    commandLine "npm", "run", "build"
+}
+
+task("buildJar") {
+    buildAdmin.mustRunAfter("deleteApp")
+    buildApp.mustRunAfter("deleteApp")
+    copyApp.mustRunAfter("buildAdmin")
+    copyApp.mustRunAfter("buildApp")
+    bootJar.mustRunAfter("copyApp")
     bootJar.mustRunAfter("clean")
-    bootJar.mustRunAfter("copyAdmin")
-}.dependsOn("clean", "deleteAdmin", "bootJar", "buildAdmin", "copyAdmin")
+}.dependsOn("clean", "deleteApp", "buildAdmin", "buildApp", "copyApp", "bootJar")
+
+
+task("buildDev") {
+    buildAdmin.mustRunAfter("deleteApp")
+    buildDevApp.mustRunAfter("deleteApp")
+    copyApp.mustRunAfter("buildAdmin")
+    copyApp.mustRunAfter("buildDevApp")
+}.dependsOn("clean", "deleteApp", "buildAdmin", "buildDevApp", "copyApp")
