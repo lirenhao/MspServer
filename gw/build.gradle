@@ -72,7 +72,8 @@ test {
 }
 
 task("copyApp") {
-    description("拷贝webapp")
+    group("app")
+    description("copy app build output")
     doLast {
         copy {
             from '../admin/dist'
@@ -102,7 +103,8 @@ task("copyApp") {
 }
 
 task("deleteApp") {
-    description("清理webapp")
+    group("app")
+    description("delete app build output")
     doLast {
         delete "src/main/resources/static/admin"
     }
@@ -112,6 +114,8 @@ task("deleteApp") {
 }
 
 task("buildAdmin") {
+    group("app")
+    description("build admin")
     doLast {
         exec {
             workingDir '../admin'
@@ -125,6 +129,8 @@ task("buildAdmin") {
 }
 
 task("buildApp") {
+    group("app")
+    description("build app")
     doLast {
         exec {
             workingDir '../app'
@@ -138,6 +144,8 @@ task("buildApp") {
 }
 
 task("buildDevApp") {
+    group("app")
+    description("build dev env app")
     doLast {
         exec {
             workingDir '../app'
@@ -151,6 +159,8 @@ task("buildDevApp") {
 }
 
 task("buildDev") {
+    group("build")
+    description("build dev env")
     buildAdmin.mustRunAfter("deleteApp")
     buildDevApp.mustRunAfter("deleteApp")
     copyApp.mustRunAfter("buildAdmin")
@@ -158,6 +168,8 @@ task("buildDev") {
 }.dependsOn("clean", "deleteApp", "buildAdmin", "buildDevApp", "copyApp")
 
 task("buildMspSvc") {
+    group("svc")
+    description("build msp svc")
     doLast {
         exec {
             workingDir "../mspSvc"
@@ -166,7 +178,9 @@ task("buildMspSvc") {
     }
 }
 
-task("buildUserSvc", type: Exec) {
+task("buildUserSvc") {
+    group("svc")
+    description("build user svc")
     doLast {
         exec {
             workingDir "../userSvc"
@@ -176,6 +190,8 @@ task("buildUserSvc", type: Exec) {
 }
 
 task("buildGw") {
+    group("svc")
+    description("build gw svc")
     buildAdmin.mustRunAfter("deleteApp")
     buildApp.mustRunAfter("deleteApp")
     copyApp.mustRunAfter("buildAdmin")
@@ -185,12 +201,16 @@ task("buildGw") {
 }.dependsOn("clean", "deleteApp", "buildAdmin", "buildApp", "copyApp", "bootJar")
 
 task("deleteJar") {
+    group("svc")
+    description("delete build output")
     doLast {
         delete "../dist"
     }
 }
 
 task("copyJar") {
+    group("svc")
+    description("copy build jar output to dist")
     doLast {
         copy {
             from '../gw/build/libs/gw-1.0-SNAPSHOT.jar'
@@ -223,6 +243,8 @@ task("copyJar") {
 }
 
 task("buildAll") {
+    group("build")
+    description("build all output to dist")
     copyJar.mustRunAfter("deleteJar")
     copyJar.mustRunAfter("buildGw")
     copyJar.mustRunAfter("buildMspSvc")
