@@ -71,8 +71,7 @@ test {
     }
 }
 
-tasks.register("copyApp") {
-    group("build")
+task("copyApp") {
     description("拷贝webapp")
     doLast {
         copy {
@@ -102,8 +101,7 @@ tasks.register("copyApp") {
     }
 }
 
-tasks.register("deleteApp") {
-    group("build")
+task("deleteApp") {
     description("清理webapp")
     doLast {
         delete "src/main/resources/static/admin"
@@ -113,22 +111,43 @@ tasks.register("deleteApp") {
     }
 }
 
-task("buildAdmin", type: Exec) {
-    workingDir("../admin")
-    commandLine "npm", "install"
-    commandLine "npm", "run", "build"
+task("buildAdmin") {
+    doLast {
+        exec {
+            workingDir '../admin'
+            commandLine 'npm', 'install'
+        }
+        exec {
+            workingDir '../admin'
+            commandLine 'npm', 'run', 'build'
+        }
+    }
 }
 
-task("buildApp", type: Exec) {
-    workingDir("../app")
-    commandLine "npm", "install"
-    commandLine "npm", "run", "build:sg"
+task("buildApp") {
+    doLast {
+        exec {
+            workingDir '../app'
+            commandLine 'npm', 'install'
+        }
+        exec {
+            workingDir '../app'
+            commandLine 'npm', 'run', 'build:sg'
+        }
+    }
 }
 
-task("buildDevApp", type: Exec) {
-    workingDir("../app")
-    commandLine "npm", "install"
-    commandLine "npm", "run", "build"
+task("buildDevApp") {
+    doLast {
+        exec {
+            workingDir '../app'
+            commandLine 'npm', 'install'
+        }
+        exec {
+            workingDir '../app'
+            commandLine 'npm', 'run', 'build'
+        }
+    }
 }
 
 task("buildDev") {
@@ -138,14 +157,22 @@ task("buildDev") {
     copyApp.mustRunAfter("buildDevApp")
 }.dependsOn("clean", "deleteApp", "buildAdmin", "buildDevApp", "copyApp")
 
-task("buildMspSvc", type: Exec) {
-    workingDir("../mspSvc")
-    commandLine "mvn", "clean", "package"
+task("buildMspSvc") {
+    doLast {
+        exec {
+            workingDir "../mspSvc"
+            commandLine "mvn", "clean", "package"
+        }
+    }
 }
 
 task("buildUserSvc", type: Exec) {
-    workingDir("../userSvc")
-    commandLine "gradle", "clean", "build"
+    doLast {
+        exec {
+            workingDir "../userSvc"
+            commandLine "gradle", "clean", "build"
+        }
+    }
 }
 
 task("buildGw") {
@@ -157,17 +184,13 @@ task("buildGw") {
     bootJar.mustRunAfter("clean")
 }.dependsOn("clean", "deleteApp", "buildAdmin", "buildApp", "copyApp", "bootJar")
 
-tasks.register("deleteJar") {
-    group("build")
-    description("清理jar")
+task("deleteJar") {
     doLast {
         delete "../dist"
     }
 }
 
-tasks.register("copyJar") {
-    group("build")
-    description("拷贝jar")
+task("copyJar") {
     doLast {
         copy {
             from '../gw/build/libs/gw-1.0-SNAPSHOT.jar'
