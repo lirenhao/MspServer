@@ -44,3 +44,8 @@ yada.security:
     expire: 3600
 
 yada.db.mongo.uri: 'mongodb://localhost/msp_auth?replicaSet=rs'
+
+spring:
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    cache: false
