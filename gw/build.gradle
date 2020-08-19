@@ -131,7 +131,24 @@ task("buildDevApp", type: Exec) {
     commandLine "npm", "run", "build"
 }
 
-task("buildJar") {
+task("buildDev") {
+    buildAdmin.mustRunAfter("deleteApp")
+    buildDevApp.mustRunAfter("deleteApp")
+    copyApp.mustRunAfter("buildAdmin")
+    copyApp.mustRunAfter("buildDevApp")
+}.dependsOn("clean", "deleteApp", "buildAdmin", "buildDevApp", "copyApp")
+
+task("buildMspSvc", type: Exec) {
+    workingDir("../mspSvc")
+    commandLine "mvn", "clean", "package"
+}
+
+task("buildUserSvc", type: Exec) {
+    workingDir("../userSvc")
+    commandLine "gradle", "clean", "build"
+}
+
+task("buildGw") {
     buildAdmin.mustRunAfter("deleteApp")
     buildApp.mustRunAfter("deleteApp")
     copyApp.mustRunAfter("buildAdmin")
@@ -140,10 +157,51 @@ task("buildJar") {
     bootJar.mustRunAfter("clean")
 }.dependsOn("clean", "deleteApp", "buildAdmin", "buildApp", "copyApp", "bootJar")
 
+tasks.register("deleteJar") {
+    group("build")
+    description("清理jar")
+    doLast {
+        delete "../dist"
+    }
+}
 
-task("buildDev") {
-    buildAdmin.mustRunAfter("deleteApp")
-    buildDevApp.mustRunAfter("deleteApp")
-    copyApp.mustRunAfter("buildAdmin")
-    copyApp.mustRunAfter("buildDevApp")
-}.dependsOn("clean", "deleteApp", "buildAdmin", "buildDevApp", "copyApp")
+tasks.register("copyJar") {
+    group("build")
+    description("拷贝jar")
+    doLast {
+        copy {
+            from '../gw/build/libs/gw-1.0-SNAPSHOT.jar'
+            into '../dist/gw'
+        }
+        copy {
+            from '../gw/src/main/resources'
+            into '../dist/gw'
+            include('application*')
+        }
+        copy {
+            from '../mspSvc/target/msp-0.0.1-SNAPSHOT.jar'
+            into '../dist/msp'
+        }
+        copy {
+            from '../mspSvc/src/main/resources'
+            into '../dist/msp'
+            include('application*')
+        }
+        copy {
+            from '../userSvc/build/libs/user-0.0.1-SNAPSHOT.jar'
+            into '../dist/user'
+        }
+        copy {
+            from '../userSvc/src/main/resources'
+            into '../dist/user'
+            include('application*')
+        }
+    }
+}
+
+task("buildAll") {
+    copyJar.mustRunAfter("deleteJar")
+    copyJar.mustRunAfter("buildGw")
+    copyJar.mustRunAfter("buildMspSvc")
+    copyJar.mustRunAfter("buildUserSvc")
+}.dependsOn("deleteJar", "buildGw", "buildMspSvc", "buildUserSvc", "copyJar")
