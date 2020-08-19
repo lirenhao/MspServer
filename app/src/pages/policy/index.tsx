@@ -35,7 +35,7 @@ const PolicyView: React.FC<PolicyProps> = props => {
   }
 
   return (
-    <PageHeaderWrapper pageHeaderRender={() => (<></>)}>
+    <PageHeaderWrapper pageHeaderRender={() => (<></>)} style={{ backgroundColor: 'white' }}>
       <br />
       <div style={{ textAlign: 'center' }}>
         <h1>{policy.title}</h1>
@@ -50,6 +50,7 @@ const PolicyView: React.FC<PolicyProps> = props => {
           <FormattedMessage id='policy.option.agree' />
         </Button>
       </div>
+      <br />
     </PageHeaderWrapper>
   )
 };
