@@ -31,7 +31,7 @@ const errorHandler = (error: { response: Response }): Response => {
   const { response } = error;
   if (response && response.status === 401) {
     const queryString = stringify({
-      redirect: window.location.href,
+      redirect: window.location.href.split('#')[0],
     });
     window.location.href = `${process.env.SERVICE_CONTEXT || ''}/login?${queryString}`;
   }
