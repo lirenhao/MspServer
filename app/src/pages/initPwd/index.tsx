@@ -25,7 +25,7 @@ interface InitProps {
   dispatch: Dispatch<any>;
 }
 
-const InitView: React.FC<InitProps> = (props) => {
+const InitView: React.FC<InitProps> = props => {
   const { loading, sending, isSend, dispatch } = props;
 
   const [form] = Form.useForm();
@@ -39,8 +39,8 @@ const InitView: React.FC<InitProps> = (props) => {
           type: 'user/setUser',
         });
         router.replace('/');
-      }
-    })
+      },
+    });
   };
 
   const handleSendCode = () => {
@@ -56,17 +56,19 @@ const InitView: React.FC<InitProps> = (props) => {
             message: formatMessage({ id: 'init.captcha.send.failed' }),
           });
         }
-      }
-    })
+      },
+    });
   };
 
   return (
-    <PageHeaderWrapper pageHeaderRender={() => (<></>)}>
+    <PageHeaderWrapper pageHeaderRender={() => <></>}>
       <Card bordered={false} style={{ marginTop: 40 }}>
         <h1 style={{ textAlign: 'center' }}>{formatMessage({ id: 'init.title' })}</h1>
         <Form
-          size="large" style={{ marginTop: 40 }}
-          form={form} {...layout}
+          size="large"
+          style={{ marginTop: 40 }}
+          form={form}
+          {...layout}
           onFinish={values => handleSubmit(values as InitData)}
         >
           <Form.Item
@@ -74,7 +76,7 @@ const InitView: React.FC<InitProps> = (props) => {
             extra={formatMessage({ id: 'init.captcha.extra' })}
           >
             <Row gutter={8}>
-              <Col span={16}>
+              <Col span={15}>
                 <Form.Item
                   name="code"
                   noStyle
@@ -86,24 +88,31 @@ const InitView: React.FC<InitProps> = (props) => {
                     {
                       len: 6,
                       message: formatMessage({ id: 'init.captcha.role-len' }),
-                    }
+                    },
                   ]}
                 >
                   <Input placeholder={formatMessage({ id: 'init.captcha.placeholder' })} />
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col span={9}>
                 {isSend ? (
-                  <Statistic.Countdown format="s" suffix="S"
+                  <Statistic.Countdown
+                    format="s"
+                    suffix="S"
                     value={Date.now() + 1000 * 60}
                     onFinish={() => dispatch({ type: 'init/setSend', payload: false })}
                   />
                 ) : (
-                    <Button block disabled={isSend} onClick={handleSendCode} loading={sending}>
-                      {formatMessage({ id: 'init.captcha.button' })}
-                    </Button>
-                  )
-                }
+                  <Button
+                    block
+                    type="primary"
+                    disabled={isSend}
+                    onClick={handleSendCode}
+                    loading={sending}
+                  >
+                    {formatMessage({ id: 'init.captcha.button' })}
+                  </Button>
+                )}
               </Col>
             </Row>
           </Form.Item>
@@ -120,6 +129,7 @@ const InitView: React.FC<InitProps> = (props) => {
                 message: formatMessage({ id: 'init.newPwd.role-pattern' }),
               },
             ]}
+            extra={() => <br />}
           >
             <Input.Password
               placeholder={formatMessage({ id: 'init.newPwd.placeholder' })}
@@ -135,10 +145,13 @@ const InitView: React.FC<InitProps> = (props) => {
                 message: formatMessage({ id: 'init.checkPwd.role-required' }),
               },
               {
-                validator: (_, value) => (value === '' || value === form.getFieldValue('newPwd')) ?
-                  Promise.resolve() : Promise.reject(formatMessage({ id: 'init.checkPwd.role-validator' })),
+                validator: (_, value) =>
+                  value === '' || value === form.getFieldValue('newPwd')
+                    ? Promise.resolve()
+                    : Promise.reject(formatMessage({ id: 'init.checkPwd.role-validator' })),
               },
             ]}
+            extra={() => <br />}
           >
             <Input.Password
               placeholder={formatMessage({ id: 'init.checkPwd.placeholder' })}
@@ -153,7 +166,7 @@ const InitView: React.FC<InitProps> = (props) => {
         </Form>
       </Card>
     </PageHeaderWrapper>
-  )
+  );
 };
 
 export default connect(
@@ -161,7 +174,7 @@ export default connect(
     init,
     loading,
   }: {
-    init: StateType,
+    init: StateType;
     loading: {
       effects: { [key: string]: boolean };
     };

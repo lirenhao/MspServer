@@ -18,7 +18,6 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { getAuthorityFromRouter } from '@/utils/utils';
-import Background from './Background';
 import BasicFooter from './BasicFooter';
 import logo from '../assets/logo.png';
 
@@ -85,50 +84,48 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     authority: undefined,
   };
   return (
-    <Background>
-      <ProLayout
-        logo={logo}
-        formatMessage={formatMessage}
-        menuHeaderRender={(logoDom, titleDom) => (
-          <Link to="/">
-            {logoDom}
-            {titleDom}
-          </Link>
-        )}
-        onCollapse={handleMenuCollapse}
-        menuItemRender={(menuItemProps, defaultDom) => {
-          if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
-            return defaultDom;
-          }
+    <ProLayout
+      logo={logo}
+      formatMessage={formatMessage}
+      menuHeaderRender={(logoDom, titleDom) => (
+        <Link to="/">
+          {logoDom}
+          {titleDom}
+        </Link>
+      )}
+      onCollapse={handleMenuCollapse}
+      menuItemRender={(menuItemProps, defaultDom) => {
+        if (menuItemProps.isUrl || menuItemProps.children || !menuItemProps.path) {
+          return defaultDom;
+        }
 
-          return <Link to={menuItemProps.path}>{defaultDom}</Link>;
-        }}
-        breadcrumbRender={(routers = []) => [
-          {
-            path: '/',
-            breadcrumbName: formatMessage({ id: 'menu.home' }),
-          },
-          ...routers,
-        ]}
-        itemRender={(route, params, routes, paths) => {
-          const first = routes.indexOf(route) === 0;
-          return first ? (
-            <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-          ) : (
-              <span>{route.breadcrumbName}</span>
-            );
-        }}
-        footerRender={() => <BasicFooter />}
-        menuDataRender={menuDataRender}
-        rightContentRender={() => <RightContent />}
-        {...props}
-        {...settings}
-      >
-        <Authorized authority={authorized!.authority} noMatch={noMatch}>
-          {children}
-        </Authorized>
-      </ProLayout>
-    </Background>
+        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+      }}
+      breadcrumbRender={(routers = []) => [
+        {
+          path: '/',
+          breadcrumbName: formatMessage({ id: 'menu.home' }),
+        },
+        ...routers,
+      ]}
+      itemRender={(route, params, routes, paths) => {
+        const first = routes.indexOf(route) === 0;
+        return first ? (
+          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+        ) : (
+          <span>{route.breadcrumbName}</span>
+        );
+      }}
+      footerRender={() => <BasicFooter />}
+      menuDataRender={menuDataRender}
+      rightContentRender={() => <RightContent />}
+      {...props}
+      {...settings}
+    >
+      <Authorized authority={authorized!.authority} noMatch={noMatch}>
+        {children}
+      </Authorized>
+    </ProLayout>
   );
 };
 

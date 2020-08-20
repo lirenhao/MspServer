@@ -13,7 +13,7 @@ export default {
   'init.captcha.placeholder': '请输入验证码',
   'init.captcha.role-required': '请输入验证码',
   'init.captcha.role-len': '验证码长度为6位',
-  'init.captcha.button': '获取验证码',
+  'init.captcha.button': '发送验证码',
   'init.captcha.send.success': '验证码发送成功',
   'init.captcha.send.failed': '验证码发送失败，请稍后再试',
   'init.submit': '提交',

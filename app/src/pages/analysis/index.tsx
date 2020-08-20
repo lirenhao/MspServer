@@ -48,43 +48,34 @@ const AnalysisView: React.FC<AnalysisViewProps> = props => {
               <ChartCard
                 bordered={false}
                 title={total.year}
-                avatar={
-                  <CreditCardTwoTone style={{ fontSize: '56px' }} />
-                }
+                avatar={<CreditCardTwoTone style={{ fontSize: '56px' }} />}
                 loading={loading}
                 total={numeral(total.count).format('0,0')}
                 footer={<>{formatMessage({ id: 'analysis.total.tran.count' })}</>}
                 contentHeight={60}
-              >
-              </ChartCard>
+              ></ChartCard>
             </Col>
             <Col {...totalColProps}>
               <ChartCard
                 bordered={false}
                 loading={loading}
                 title={total.year}
-                avatar={
-                  <DollarCircleTwoTone style={{ fontSize: '56px' }} />
-                }
+                avatar={<DollarCircleTwoTone style={{ fontSize: '56px' }} />}
                 total={() => `S$${numeral(total.trans).format('0,0.00')}`}
                 footer={<>{formatMessage({ id: 'analysis.total.tran.volume' })}</>}
                 contentHeight={60}
-              >
-              </ChartCard>
+              ></ChartCard>
             </Col>
             <Col {...totalColProps}>
               <ChartCard
                 bordered={false}
                 loading={loading}
                 title={total.year}
-                avatar={
-                  <ReconciliationTwoTone style={{ fontSize: '56px' }} />
-                }
+                avatar={<ReconciliationTwoTone style={{ fontSize: '56px' }} />}
                 total={() => `S$${numeral(total.settle).format('0,0.00')}`}
                 footer={<>{formatMessage({ id: 'analysis.total.settle.volume' })}</>}
                 contentHeight={60}
-              >
-              </ChartCard>
+              ></ChartCard>
             </Col>
           </Row>
         </Suspense>
@@ -98,7 +89,10 @@ const AnalysisView: React.FC<AnalysisViewProps> = props => {
                     <Bar
                       height={295}
                       title={formatMessage({ id: 'analysis.month.sales' })}
-                      data={months.map(item => ({ x: `${item.month}${formatMessage({ id: 'analysis.month' })}`, y: item.sales }))}
+                      data={months.map(item => ({
+                        x: `${formatMessage({ id: 'analysis.month.' + item.month })}`,
+                        y: item.sales,
+                      }))}
                     />
                   </div>
                 </Col>
@@ -114,35 +108,50 @@ const AnalysisView: React.FC<AnalysisViewProps> = props => {
                 <Card bordered={false}>
                   <Pie
                     hasLegend
-                    data={[{ x: 'On-us', y: 10 }, { x: 'Off-us', y: 20 },]}
-                    height={200}
+                    data={[
+                      { x: 'On-us', y: 10 },
+                      { x: 'Off-us', y: 20 },
+                    ]}
+                    height={258}
                     inner={0}
                   />
                 </Card>
               </Col>
               <Col xl={14} lg={12} md={12} sm={24} xs={24}>
-                <Card loading={loading} bordered={false} bodyStyle={{ padding: 0, height: 248 }}>
+                <Card
+                  loading={loading}
+                  bordered={false}
+                  bodyStyle={{ padding: 0, height: 248 }}
+                  title={formatMessage({ id: 'analysis.tops.title' })}
+                >
                   <List
                     className={styles.salesRank}
                     dataSource={tops}
-                    renderItem={(item, i) => i < 5 ?
-                      <ul className={styles.rankingList}>
-                        <li key={i}>
-                          <span className={`${styles.rankingItemNumber} ${i < 3 ? styles.active : ''}`}>
-                            {i + 1}
-                          </span>
-                          <span className={styles.rankingItemTitle} title={item.merNo}>
-                            {item.merNo}
-                          </span>
-                          <span className={styles.rankingItemTitle} title={item.merName}>
-                            {item.merName}
-                          </span>
-                          <span className={styles.rankingItemValue}>
-                            {`S$${numeral(item.sales).format('0,0.00')}`}
-                          </span>
-                        </li>
-                      </ul> : null
-                    } />
+                    renderItem={(item, i) =>
+                      i < 5 ? (
+                        <ul className={styles.rankingList}>
+                          <li key={i}>
+                            <span
+                              className={`${styles.rankingItemNumber} ${
+                                i < 3 ? styles.active : ''
+                              }`}
+                            >
+                              {i + 1}
+                            </span>
+                            <span className={styles.rankingItemTitle} title={item.merNo}>
+                              {item.merNo}
+                            </span>
+                            <span className={styles.rankingItemTitle} title={item.merName}>
+                              {item.merName}
+                            </span>
+                            <span className={styles.rankingItemValue}>
+                              {`S$${numeral(item.sales).format('0,0.00')}`}
+                            </span>
+                          </li>
+                        </ul>
+                      ) : null
+                    }
+                  />
                 </Card>
               </Col>
             </Row>
@@ -151,7 +160,7 @@ const AnalysisView: React.FC<AnalysisViewProps> = props => {
       </React.Fragment>
     </GridContent>
   );
-}
+};
 
 export default connect(
   ({

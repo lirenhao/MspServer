@@ -17,7 +17,6 @@ interface MerInfoState {
 }
 
 class MerInfo extends Component<MerInfoProps, MerInfoState> {
-
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -55,21 +54,39 @@ class MerInfo extends Component<MerInfoProps, MerInfoState> {
       },
     ];
     return (
-      <PageHeaderWrapper extra={<a href="#">{formatMessage({ id: 'merInfo.revise' })}</a>}>
+      <PageHeaderWrapper>
         <Card bordered={false}>
-          <Descriptions column={2} title={formatMessage({ id: 'merInfo.title' })} style={{ marginBottom: 32 }}>
-            <Descriptions.Item label={formatMessage({ id: 'merInfo.merName.title' })}>{merInfo.merName}</Descriptions.Item>
-            <Descriptions.Item label={formatMessage({ id: 'merInfo.merAddress.title' })}>{merInfo.merAddress}</Descriptions.Item>
+          <Descriptions
+            column={2}
+            title={formatMessage({ id: 'merInfo.title' })}
+            style={{ marginBottom: 32 }}
+          >
+            <Descriptions.Item label={formatMessage({ id: 'merInfo.merName.title' })}>
+              {merInfo.merName}
+            </Descriptions.Item>
+            <Descriptions.Item label={formatMessage({ id: 'merInfo.merAddress.title' })}>
+              {merInfo.merAddress}
+            </Descriptions.Item>
             {/* <Descriptions.Item label={formatMessage({ id: 'merInfo.merNameAbbr.title' })}>{merInfo.merNameAbbr}</Descriptions.Item>
             <Descriptions.Item label={formatMessage({ id: 'merInfo.accountNo.title' })}>{merInfo.accountNo}</Descriptions.Item> */}
-            <Descriptions.Item label={formatMessage({ id: 'merInfo.merNo.title' })}>{merInfo.merNo}</Descriptions.Item>
+            <Descriptions.Item label={formatMessage({ id: 'merInfo.merNo.title' })}>
+              {merInfo.merNo}
+            </Descriptions.Item>
           </Descriptions>
           <Divider style={{ marginBottom: 32 }} />
           <Descriptions column={2} title={formatMessage({ id: 'merInfo.contact.title' })}>
-            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactName.title' })}>{merInfo.contactName}</Descriptions.Item>
-            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactPhone.title' })}>{merInfo.contactPhone}</Descriptions.Item>
-            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactEmail.title' })}>{merInfo.contactEmail}</Descriptions.Item>
-            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactTax.title' })}>{merInfo.contactTax}</Descriptions.Item>
+            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactName.title' })}>
+              {merInfo.contactName}
+            </Descriptions.Item>
+            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactPhone.title' })}>
+              {merInfo.contactPhone}
+            </Descriptions.Item>
+            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactEmail.title' })}>
+              {merInfo.contactEmail}
+            </Descriptions.Item>
+            <Descriptions.Item label={formatMessage({ id: 'merInfo.contactTax.title' })}>
+              {merInfo.contactTax}
+            </Descriptions.Item>
           </Descriptions>
           <Divider style={{ marginBottom: 32 }} />
           <div className={styles.title}>{formatMessage({ id: 'merInfo.term.title' })}</div>
@@ -83,7 +100,7 @@ class MerInfo extends Component<MerInfoProps, MerInfoState> {
             rowKey="termNo"
           />
         </Card>
-      </PageHeaderWrapper >
+      </PageHeaderWrapper>
     );
   }
 }
