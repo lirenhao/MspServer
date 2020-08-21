@@ -81,7 +81,7 @@ const ModifyView: React.FC<ModifyPwdProps> = props => {
               message: formatMessage({ id: 'modify.newPwd.role-required' }),
             },
             {
-              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
+              pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{9,16}$/,
               message: formatMessage({ id: 'modify.newPwd.role-pattern' }),
             },
           ]}

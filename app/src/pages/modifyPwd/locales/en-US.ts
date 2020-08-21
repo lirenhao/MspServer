@@ -6,7 +6,7 @@ export default {
   'modify.newPwd.label': 'New Password',
   'modify.newPwd.placeholder': 'Password',
   'modify.newPwd.role-required': '请输入密码！',
-  'modify.newPwd.role-pattern': '密码需要是数字加大小写字母组合,长度范围在8到32位',
+  'modify.newPwd.role-pattern': '密码需要是数字加大小写字母组合,长度范围在9到16位',
   'modify.checkPwd.label': 'Confirm Password',
   'modify.checkPwd.placeholder': 'Confirm Password',
   'modify.checkPwd.role-required': '请输入确认密码！',

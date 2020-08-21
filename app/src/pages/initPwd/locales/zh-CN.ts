@@ -3,7 +3,7 @@ export default {
   'init.newPwd.label': '新密码',
   'init.newPwd.placeholder': '请输入新密码',
   'init.newPwd.role-required': '请输入密码',
-  'init.newPwd.role-pattern': '密码需要是数字加大小写字母组合,长度范围在8到32位',
+  'init.newPwd.role-pattern': '密码需要是数字加大小写字母组合,长度范围在9到16位',
   'init.checkPwd.label': '确认密码',
   'init.checkPwd.placeholder': '再次确认密码',
   'init.checkPwd.role-required': '请输入确认密码',

@@ -103,16 +103,16 @@ const InitView: React.FC<InitProps> = props => {
                     onFinish={() => dispatch({ type: 'init/setSend', payload: false })}
                   />
                 ) : (
-                  <Button
-                    block
-                    type="primary"
-                    disabled={isSend}
-                    onClick={handleSendCode}
-                    loading={sending}
-                  >
-                    {formatMessage({ id: 'init.captcha.button' })}
-                  </Button>
-                )}
+                    <Button
+                      block
+                      type="primary"
+                      disabled={isSend}
+                      onClick={handleSendCode}
+                      loading={sending}
+                    >
+                      {formatMessage({ id: 'init.captcha.button' })}
+                    </Button>
+                  )}
               </Col>
             </Row>
           </Form.Item>
@@ -125,7 +125,7 @@ const InitView: React.FC<InitProps> = props => {
                 message: formatMessage({ id: 'init.newPwd.role-required' }),
               },
               {
-                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/,
+                pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{9,16}$/,
                 message: formatMessage({ id: 'init.newPwd.role-pattern' }),
               },
             ]}
