@@ -34,7 +34,7 @@ yada.security:
   defaultPwd: 111111
   pwdStrength: 1
   recaptcha:
-    type: None
+    type: Google
     secret: 6Leu2NsUAAAAAKbXdSjLz6_c1cf8qX2bL4xfn1mN
     sitekey: 6Leu2NsUAAAAAFttLaiyEKDu9yLgrYJhN77Ou1ge
     proxyHost:
