@@ -1,13 +1,13 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { PageHeaderWrapper, GridContent } from '@ant-design/pro-layout';
+import { PageContainer, GridContent } from '@ant-design/pro-layout';
 import { Spin, Button, Menu, Card, Empty, notification } from 'antd';
 import { connect } from 'dva';
 import { RoleData, KeyData } from './data';
 import { ModelState } from './model';
-import RightMenu from './RightMenu';
-import RoleRes from './RoleRes';
-import RoleForm from './RoleForm';
+import RightMenu from './components/RightMenu';
+import RoleRes from './components/RoleRes';
+import RoleForm from './components/RoleForm';
 
 import styles from './style.less';
 
@@ -58,7 +58,7 @@ const RoleView: React.FC<RoleProps> = props => {
   }
 
   return (
-    <PageHeaderWrapper extra={<Button type="link" onClick={() => setIsCreateRole(true)}>新增</Button>}>
+    <PageContainer extra={<Button type="link" onClick={() => setIsCreateRole(true)}>新增</Button>}>
       <Spin spinning={loading}>
         <GridContent>
           <div className={styles.main} >
@@ -66,7 +66,7 @@ const RoleView: React.FC<RoleProps> = props => {
               <Menu
                 mode="inline"
                 selectedKeys={[id]}
-                onClick={({ key }) => handleSelect(key)}
+                onClick={({ key }) => handleSelect(key + '')}
               >
                 {roles.map(role => (
                   <Menu.Item key={role.id} >
@@ -83,7 +83,7 @@ const RoleView: React.FC<RoleProps> = props => {
       </Spin>
       <RoleForm title="添加角色" visible={isCreateRole} onCancel={() => setIsCreateRole(false)}
         info={{ svcs: [] }} onSubmit={handleCreateRole} />
-    </PageHeaderWrapper>
+    </PageContainer>
   )
 }
 

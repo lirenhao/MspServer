@@ -1,12 +1,13 @@
 import React from 'react';
 import { Dispatch } from 'redux';
-import { GridContent } from '@ant-design/pro-layout';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { Spin, Menu, Modal, Card, List, Row, Col, Icon, Tooltip, Button, notification } from 'antd';
+import { PageContainer, GridContent } from '@ant-design/pro-layout';
+import { CloseOutlined } from '@ant-design/icons';
+import { Spin, Menu, Modal, Card, List, Row, Col, Tooltip, Button, notification } from 'antd';
 import { connect } from 'dva';
 import { SvcData, ResData } from './data.d';
 import { ModelState } from './model';
-import SvcUpdate from './SvcUpdate';
+import SvcForm from './components/SvcForm';
+import SvcUpdate from './components/SvcUpdate';
 
 import styles from './style.less';
 
@@ -24,6 +25,7 @@ interface SvcProps {
 const SvcView: React.FC<SvcProps> = props => {
   const { dispatch, svcIds, svcs, svcId, loading } = props;
 
+  const [isCreate, setIsCreate] = React.useState<boolean>(false);
   const [isUpdateSvc, setIsUpdateSvc] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -35,6 +37,20 @@ const SvcView: React.FC<SvcProps> = props => {
     dispatch({
       type: 'svc/setSvcId',
       payload: key,
+    });
+  }
+
+  const handleCreate = (svc: SvcData) => {
+    dispatch({
+      type: 'svc/fetchUpdateSvc',
+      payload: svc,
+      callback: () => {
+        setIsUpdateSvc(false);
+        notification.success({
+          message: '添加服务操作成功',
+          description: `服务【${svc.id}】已添加成功!`,
+        });
+      },
     });
   }
 
@@ -75,7 +91,7 @@ const SvcView: React.FC<SvcProps> = props => {
   }
 
   return (
-    <PageHeaderWrapper>
+    <PageContainer extra={<Button type="link" onClick={() => setIsCreate(true)}>新增</Button>}>
       <Spin spinning={loading}>
         <GridContent>
           <div className={styles.main} >
@@ -83,7 +99,7 @@ const SvcView: React.FC<SvcProps> = props => {
               <Menu
                 mode="inline"
                 selectedKeys={[svcId]}
-                onClick={({ key }) => selectKey(key)}
+                onClick={({ key }) => selectKey(key + '')}
               >
                 {svcs.map(svc => (
                   <Item key={svc.id} disabled={!svcIds.includes(svc.id)}>
@@ -97,7 +113,7 @@ const SvcView: React.FC<SvcProps> = props => {
                                 e.stopPropagation();
                                 handleRemove(svc.id);
                               }} >
-                              <Icon type="close" style={{ marginRight: 0 }} />
+                              <CloseOutlined style={{ marginRight: 0 }} />
                             </Button>
                           </Tooltip>
                         </Col>
@@ -126,8 +142,9 @@ const SvcView: React.FC<SvcProps> = props => {
           </div>
         </GridContent>
       </Spin>
+      <SvcForm title="服务新增" visible={isCreate} onCancel={() => setIsCreate(false)} onSubmit={handleCreate} info={{ resources: [] }} />
       <SvcUpdate svcId={svcId} visible={isUpdateSvc} onCancel={() => setIsUpdateSvc(false)} onSubmit={handleUpdate} />
-    </PageHeaderWrapper>
+    </PageContainer>
   )
 }
 
