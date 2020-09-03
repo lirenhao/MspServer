@@ -1,9 +1,9 @@
 import React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'dva';
-import { Checkbox, Button } from 'antd';
+import { Checkbox, Button, Alert } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { FormattedMessage } from 'umi-plugin-react/locale';
+import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import router from 'umi/router';
 import { PolicyData } from './data.d';
 
@@ -36,6 +36,8 @@ const PolicyView: React.FC<PolicyProps> = props => {
 
   return (
     <PageHeaderWrapper pageHeaderRender={() => (<></>)} style={{ backgroundColor: 'white' }}>
+      <br />
+      <Alert message={formatMessage({ id: 'policy.alert.message' })} type="error" closable />
       <br />
       <div style={{ textAlign: 'center' }}>
         <h1>{policy.title}</h1>
