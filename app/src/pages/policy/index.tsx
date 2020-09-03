@@ -44,9 +44,9 @@ const PolicyView: React.FC<PolicyProps> = props => {
       <br />
       <div style={{ textAlign: 'center' }}>
         <Checkbox checked={isAgree} onChange={() => setIsAgree(!isAgree)}>
-          <FormattedMessage id='policy.read.agree' />
+          <span style={{ fontSize: '16px' }}><FormattedMessage id='policy.read.agree' /></span>
         </Checkbox>
-        <Button type="primary" shape="round" disabled={!isAgree} onClick={handleAgree} loading={loading}>
+        <Button type="primary" shape="round" size="large" disabled={!isAgree} onClick={handleAgree} loading={loading}>
           <FormattedMessage id='policy.option.agree' />
         </Button>
       </div>
