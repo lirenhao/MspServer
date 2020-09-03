@@ -1,4 +1,4 @@
-import { MonthData, TopData } from './data';
+import { MonthData, TopData } from './data.d';
 
 const monthData: MonthData[] = [];
 for (let i = 0; i < 12; i += 1) {

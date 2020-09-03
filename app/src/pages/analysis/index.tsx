@@ -90,7 +90,7 @@ const AnalysisView: React.FC<AnalysisViewProps> = props => {
                       height={295}
                       title={formatMessage({ id: 'analysis.month.sales' })}
                       data={months.map(item => ({
-                        x: `${formatMessage({ id: 'analysis.month.' + item.month })}`,
+                        x: formatMessage({ id: `analysis.month.${item.month}` }),
                         y: item.sales,
                       }))}
                     />
@@ -134,7 +134,7 @@ const AnalysisView: React.FC<AnalysisViewProps> = props => {
                             <span
                               className={`${styles.rankingItemNumber} ${
                                 i < 3 ? styles.active : ''
-                              }`}
+                                }`}
                             >
                               {i + 1}
                             </span>
