@@ -33,6 +33,9 @@ public class Trans {
     @Column(name = "RESP_CODE")
     private String respCode; // 交易状态
 
+    @Column(name = "TRAN_STATUS")
+    private String tranStatus; // 交易状态
+
     @Column(name = "TRAN_DATE")
     private String tranDate;
 
@@ -76,7 +79,7 @@ public class Trans {
     }
 
     public String getCardNo() {
-        return StringUtil.formatCardNo(cardNo);
+        return cardNo;
     }
 
     public void setCardNo(String cardNo) {
@@ -105,6 +108,14 @@ public class Trans {
 
     public void setRespCode(String respCode) {
         this.respCode = respCode;
+    }
+
+    public String getTranStatus() {
+        return tranStatus;
+    }
+
+    public void setTranStatus(String tranStatus) {
+        this.tranStatus = tranStatus;
     }
 
     public String getTranDate() {

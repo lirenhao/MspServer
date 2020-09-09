@@ -13,6 +13,7 @@ public class TransQuery implements Specification<Trans> {
     private String termNo; // 终端号
     private String tranType; // 交易类型
     private String tranDate; // 交易时间
+    private String tranStatus;
 
     public String getMerNo() {
         return merNo;
@@ -46,6 +47,14 @@ public class TransQuery implements Specification<Trans> {
         this.tranDate = tranDate;
     }
 
+    public String getTranStatus() {
+        return tranStatus;
+    }
+
+    public void setTranStatus(String tranStatus) {
+        this.tranStatus = tranStatus;
+    }
+
     @Override
     public Predicate toPredicate(Root<Trans> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         List<Predicate> list = new LinkedList<>();
@@ -61,6 +70,9 @@ public class TransQuery implements Specification<Trans> {
         }
         if (null != tranDate && !"".equals(tranDate)) {
             list.add(cb.equal(root.get("tranDate").as(String.class), tranDate));
+        }
+        if (null != tranStatus && !"".equals(tranStatus)) {
+            list.add(cb.equal(root.get("tranStatus").as(String.class), tranStatus));
         }
         if (list.size() > 0) {
             query.where(list.toArray(new Predicate[0]));
