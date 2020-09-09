@@ -127,10 +127,10 @@ const SearchView: React.FC<SearchProps> = props => {
         </Row>
         <Row gutter={16} justify="start">
           <Col {...defaultColConfig} >
-            <Form.Item {...layout} label={formatMessage({ id: 'trans.respCode.title' })} name="respCode">
+            <Form.Item {...layout} label={formatMessage({ id: 'trans.respCode.title' })} name="tranStatus">
               <Select placeholder={formatMessage({ id: 'trans.respCode.placeholder' })} allowClear={true}>
-                <Select.Option value='00'>{formatMessage({ id: 'trans.respCode.success' })}</Select.Option>
-                <Select.Option value='01'>{formatMessage({ id: 'trans.respCode.fail' })}</Select.Option>
+                <Select.Option value='0'>{formatMessage({ id: 'trans.respCode.success' })}</Select.Option>
+                <Select.Option value='1'>{formatMessage({ id: 'trans.respCode.fail' })}</Select.Option>
               </Select>
             </Form.Item>
           </Col>

@@ -74,16 +74,6 @@ const PageView: React.FC<PageViewProps> = props => {
     {
       title: formatMessage({ id: 'trans.respCode.title' }),
       dataIndex: 'respCode',
-      render: (val: string) => {
-        switch (val) {
-          case '00':
-            return formatMessage({ id: 'trans.respCode.success' });
-          case '01':
-            return formatMessage({ id: 'trans.respCode.fail' });
-          default:
-            return val;
-        }
-      },
     },
     {
       title: formatMessage({ id: 'trans.tranDate.title' }),

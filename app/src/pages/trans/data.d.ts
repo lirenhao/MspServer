@@ -6,6 +6,7 @@ export interface TransItem {
   tranAmt: number;
   tranType: string;
   respCode: string;
+  tranStatus: string;
   tranDate: string;
   tranTime: string;
   batchNo: string;
@@ -20,6 +21,7 @@ export interface TransQuery {
   tranType?: string;
   respCode?: string;
   tranDate?: string;
+  tranStatus?: string;
   page: number;
   size: number;
 }
