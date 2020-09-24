@@ -18,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException
 import reactor.core.publisher.Mono
 import java.net.URI
 
-
 @Component
 class AuthHandler @Autowired constructor(
         private val userService: IUserService,
