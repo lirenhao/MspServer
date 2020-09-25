@@ -30,6 +30,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3")
     implementation("com.nulab-inc:zxcvbn:1.3.0")
     implementation("commons-codec:commons-codec:1.14")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

@@ -53,7 +53,7 @@ open class UserService @Autowired constructor(
     fun getPwd(id: String): Mono<String> = userRepo.findPwdById(id)
 
     fun checkPwd(id: String, pwd: String): Mono<Boolean> = getPwd(id)
-            .map { pwdDigestService.getPwdDigest(id, pwd) == it }
+            .map { pwdDigestService.checkPwdDigest(id, pwd, it) }
             .filter { it }
             .defaultIfEmpty(false)
 
@@ -78,15 +78,12 @@ open class UserService @Autowired constructor(
             }
 
     @Transactional
-    fun changePwd(id: String, oldPwd: String, newPwd: String): Mono<Boolean> {
-        val nct = pwdDigestService.getPwdDigest(id, newPwd)
-        val oct = pwdDigestService.getPwdDigest(id, oldPwd)
-
-        return getPwd(id).map { oct == it }
-                .filter { it }
-                .flatMap { changePwd(id, nct).then(Mono.just(true)) }
-                .defaultIfEmpty(false)
-    }
+    fun changePwd(id: String, oldPwd: String, newPwd: String): Mono<Boolean> = getPwd(id)
+            .filter { pwdDigestService.checkPwdDigest(id, oldPwd, it) }
+            .flatMap {
+                changePwd(id, pwdDigestService.getPwdDigest(id, newPwd)).then(Mono.just(true))
+            }
+            .defaultIfEmpty(false)
 
     fun getAll(): Flux<User> = userRepo.findAll()
 }
