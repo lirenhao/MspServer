@@ -9,7 +9,7 @@ interface IPwdDigestService {
     fun checkPwdDigest(username: String, pwdPlaintext: String, pwdDigest: String): Boolean
 }
 
-class PwdDigestService @Autowired constructor(
+class PwdDigestService constructor(
         private val defaultPwd: String,
         private val stringEncryptor: StringEncryptor
 ) : IPwdDigestService {

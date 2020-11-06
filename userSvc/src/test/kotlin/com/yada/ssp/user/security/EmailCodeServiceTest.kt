@@ -20,7 +20,7 @@ class EmailCodeServiceTest {
     @MockBean
     private lateinit var emailCodeRepo: EmailCodeRepository
     @Autowired
-    private lateinit var emailCodeService: EmailCodeService
+    private lateinit var emailCodeService: IEmailCodeService
 
     @Test
     fun `Assert check is false, findById empty`() {
