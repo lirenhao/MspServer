@@ -1,9 +1,8 @@
-logging.level:
-  org.springframework: DEBUG
+logging.level.root: info
 
 server:
   error:
-    includeStacktrace: ALWAYS
+    include-message: always
 
 yada.contextPath: /gw
 
