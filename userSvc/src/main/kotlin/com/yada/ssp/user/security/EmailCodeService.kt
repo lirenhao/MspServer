@@ -16,7 +16,6 @@ import org.thymeleaf.ITemplateEngine
 import org.thymeleaf.context.Context
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.switchIfEmpty
-import java.net.URLEncoder
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,20 +61,20 @@ open class HttpEmailCodeService constructor(
                         .uri(config.http.url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(object{
-                            @JsonProperty("CODE") val code = "0911"
-                            @JsonProperty("RECEIVER") val email = it.email
-                            @JsonProperty("SENDERMAIL") val form = config.form
-                            @JsonProperty("SENDERNAME") val name = config.name
-                            @JsonProperty("SUBJECT") val subject = config.subject
-                            @JsonProperty("CONTENT") val content = URLEncoder.encode(templateEngine.process("email", ctx), "utf-8")
-                            @JsonProperty("SGTRACENO") val sgTraceNo = it.code
+                            @JsonProperty("CODE") val code = "0911".padEnd(4)
+                            @JsonProperty("RECEIVER") val email = it.email.padEnd(100)
+                            @JsonProperty("SENDERMAIL") val form = config.form.padEnd(50)
+                            @JsonProperty("SENDERNAME") val name = config.name.padEnd(50)
+                            @JsonProperty("SUBJECT") val subject = config.subject.padEnd(100)
+                            @JsonProperty("CONTENT") val content = templateEngine.process("email", ctx).padEnd(2048)
+                            @JsonProperty("SGTRACENO") val sgTraceNo = it.code.padEnd(6)
                             @JsonProperty("CHECKSUM") val checkSum = DigestUtils.sha256Hex(it.code + config.http.key)
                         })
                         .retrieve()
                         .bodyToMono(object : ParameterizedTypeReference<Map<String, String>>() {})
             }.map {
                 logger.info("E-mail to send response! [{}]", it)
-                it["message code"] === "0000000"
+                it["message code"] == "0000000"
             }.switchIfEmpty {
                 logger.warn("E-mail to [{}] send failed! [{}]", email, "save code error")
                 Mono.just(false)
