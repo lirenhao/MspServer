@@ -61,13 +61,13 @@ open class HttpEmailCodeService constructor(
                         .uri(config.http.url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .bodyValue(object{
-                            @JsonProperty("CODE") val code = "0911".padEnd(4)
-                            @JsonProperty("RECEIVER") val email = it.email.padEnd(100)
-                            @JsonProperty("SENDERMAIL") val form = config.form.padEnd(50)
-                            @JsonProperty("SENDERNAME") val name = config.name.padEnd(50)
-                            @JsonProperty("SUBJECT") val subject = config.subject.padEnd(100)
-                            @JsonProperty("CONTENT") val content = templateEngine.process("email", ctx).padEnd(2048)
-                            @JsonProperty("SGTRACENO") val sgTraceNo = it.code.padEnd(6)
+                            @JsonProperty("CODE") val code = "0911"
+                            @JsonProperty("RECEIVER") val email = it.email
+                            @JsonProperty("SENDERMAIL") val form = config.form
+                            @JsonProperty("SENDERNAME") val name = config.name
+                            @JsonProperty("SUBJECT") val subject = config.subject
+                            @JsonProperty("CONTENT") val content = templateEngine.process("email", ctx)
+                            @JsonProperty("SGTRACENO") val sgTraceNo = it.code
                             @JsonProperty("CHECKSUM") val checkSum = DigestUtils.sha256Hex(it.code + config.http.key)
                         })
                         .retrieve()

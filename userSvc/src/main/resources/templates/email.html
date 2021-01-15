@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        p { "font-family": "Tahoma, Geneva, sans-serif;" }
-    </style>
-</head>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <body>
 <p>Dear Merchant,</p>
 <p>DO NOT reveal your user ID, Password or OTP to any unauthorized party or website. Your BOC Merchant Portal OTP is;</p>
-<h2 th:text="${code}">123456</h2>
+<h2 th:text="${code}"></h2>
 <p>This is a computer-generated email, please do not reply to this email. Instead, contact us at the contact details below if you did not request for this OTP or have any queries.&nbsp;</p>
 <p>Regards</p>
 <p>Merchant Support Unit<br /> Bank of China Limited, Singapore Branch<br /> 133 Middle Road,#03-01 BOC Plaza Singapore 188974<br /> Email: msu.sg@bankofchina.com<br />DID: 64129779</p>

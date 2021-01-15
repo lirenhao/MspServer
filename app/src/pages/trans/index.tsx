@@ -60,12 +60,26 @@ const PageView: React.FC<PageViewProps> = props => {
       dataIndex: 'tranType',
       render: (val: string) => {
         switch (val) {
-          case '00':
-            return formatMessage({ id: 'trans.tranType.pay' });
-          case '01':
-            return formatMessage({ id: 'trans.tranType.refund' });
-          case '02':
-            return formatMessage({ id: 'trans.tranType.revoke' });
+          case 'PURCHASE':
+            return formatMessage({ id: 'trans.tranType.PURCHASE' });
+          case 'VOID':
+            return formatMessage({ id: 'trans.tranType.VOID' });
+          case 'REFUND':
+            return formatMessage({ id: 'trans.tranType.REFUND' });
+          case 'CONFIRM':
+            return formatMessage({ id: 'trans.tranType.CONFIRM' });
+          case 'OFFLINE':
+            return formatMessage({ id: 'trans.tranType.OFFLINE' });
+          case 'ADJUST':
+            return formatMessage({ id: 'trans.tranType.ADJUST' });
+          case 'TIPS':
+            return formatMessage({ id: 'trans.tranType.TIPS' });
+          case 'WITHDRAWAL':
+            return formatMessage({ id: 'trans.tranType.WITHDRAWAL' });
+          case 'PRE_AUTH':
+            return formatMessage({ id: 'trans.tranType.PRE_AUTH' });
+          case 'REVERSAL':
+            return formatMessage({ id: 'trans.tranType.REVERSAL' });
           default:
             return val;
         }

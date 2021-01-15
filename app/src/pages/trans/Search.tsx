@@ -118,9 +118,16 @@ const SearchView: React.FC<SearchProps> = props => {
           <Col {...defaultColConfig} >
             <Form.Item {...layout} label={formatMessage({ id: 'trans.tranType.title' })} name="tranType">
               <Select placeholder={formatMessage({ id: 'trans.tranType.placeholder' })} allowClear={true}>
-                <Select.Option value='00'>{formatMessage({ id: 'trans.tranType.pay' })}</Select.Option>
-                <Select.Option value='01'>{formatMessage({ id: 'trans.tranType.refund' })}</Select.Option>
-                <Select.Option value='02'>{formatMessage({ id: 'trans.tranType.revoke' })}</Select.Option>
+                <Select.Option value='PURCHASE'>{formatMessage({ id: 'trans.tranType.PURCHASE' })}</Select.Option>
+                <Select.Option value='VOID'>{formatMessage({ id: 'trans.tranType.VOID' })}</Select.Option>
+                <Select.Option value='REFUND'>{formatMessage({ id: 'trans.tranType.REFUND' })}</Select.Option>
+                <Select.Option value='CONFIRM'>{formatMessage({ id: 'trans.tranType.CONFIRM' })}</Select.Option>
+                <Select.Option value='OFFLINE'>{formatMessage({ id: 'trans.tranType.OFFLINE' })}</Select.Option>
+                <Select.Option value='ADJUST'>{formatMessage({ id: 'trans.tranType.ADJUST' })}</Select.Option>
+                <Select.Option value='TIPS'>{formatMessage({ id: 'trans.tranType.TIPS' })}</Select.Option>
+                <Select.Option value='WITHDRAWAL'>{formatMessage({ id: 'trans.tranType.WITHDRAWAL' })}</Select.Option>
+                <Select.Option value='PRE_AUTH'>{formatMessage({ id: 'trans.tranType.PRE_AUTH' })}</Select.Option>
+                <Select.Option value='REVERSAL'>{formatMessage({ id: 'trans.tranType.REVERSAL' })}</Select.Option>
               </Select>
             </Form.Item>
           </Col>
